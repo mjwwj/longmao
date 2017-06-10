@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: totoro-manage
+Implementation-Version: 1.8.5-SNAPSHOT
+Built-By: lenovo
+Implementation-Vendor-Id: com.opengroup.longmao
+Build-Jdk: 1.8.0_111
+Implementation-URL: http://projects.spring.io/spring-boot/totoro-manag
+ e/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

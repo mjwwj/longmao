@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="common/head :: #head"></head>
+<body>
+<!-- wrapper -->
+<div class="wrapper">
+
+  <!-- main -->
+  <div class="main">
+
+    <!-- page -->
+    <div class="page">
+
+      <!-- page main -->
+      <div class="pageMain">
+      
+		 <!-- position -->
+      		<div class="position"><a href="/index" target="_parent" title="首页">首页</a> &gt; <span>角色管理</span> </div>
+     	 <!-- /position -->
+
+        <!-- page body -->
+        <div class="pageB">
+        
+            <button type="button" class="btn" id="J_roleQueryBtn">查询</button>
+            <button type="button" class="btn btn-warning" id="J_roleCreateBtn">新增角色</button>
+
+          <div class="table">
+            <script type="text/template" id="temp">
+              {{each this value}}
+              <tr>
+                <td>{{value.roleId||''}}</td>
+                <td>{{value.roleName||''}}</td>
+                <td>
+                  <button data-role-id="{{value.roleId}}" type="button" class="btn btn-outline btn-sm J_roleEditBtn">修改</button> &nbsp;
+                  <button data-role-id="{{value.roleId}}" type="button" class="btn btn-outline btn-sm J_roleDeleteBtn">删除</button>&nbsp;
+                  <button data-role-id="{{value.roleId}}" type="button" class="btn btn-outline btn-sm J_roleRightsBtn">权限</button>
+                </td>
+              </tr>
+              {{/each}}
+              {{if this.length === 0}}
+              <tr><td colspan="3">没有数据...</td></tr>
+              {{/if}}
+            </script>
+            <table>
+              <thead>
+                <tr>
+                  <th>编号</th>
+                  <th>名称</th>
+                  <th>设置</th>
+                </tr>
+              </thead>
+              <tbody id="content"></tbody>
+            </table>
+          </div>
+
+          <!-- 角色创建 -->
+          <div class="modal fade " id="J_roleCreate">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+              <div class="modal-body">
+                <form
+                	data-param="roleAuthority" 
+                    id="J_roleCreateForm"
+                    data-form="submit"
+                    data-action="saveRole"
+                    novalidate="novalidate">
+                  <div class="table-form">
+                   <table>
+                      <tr>
+                        <th>角色名称：</th>
+                        <td><input name="roleName" required="required" minlength="2"  maxlength="6"  specialchar="specialchar" data-chinese="角色名称" class="input" type="text"/></td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <button class="btn role_add" type="submit">保存</button> &nbsp;
+                          <button data-target="#J_roleCreate" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /角色创建 -->
+          
+           <!-- 角色编辑 -->
+          <div class="modal fade " id="J_roleEdit">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+              <div class="modal-body">
+                <form
+                	data-param="roleAuthority" 
+                    id="J_roleEditForm"
+                    data-form="submit"
+                    data-action="updateRole"
+                    novalidate="novalidate">
+                  <div class="table-form">
+                    <table>
+                         <tr>
+                        <th>角色名称：</th>
+                        <td>
+                        <input name="roleId"  type="hidden"/>
+                        <input name="roleName"  data-chinese="角色名称" class="input" type="text"/>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <button class="btn" type="submit">保存</button> &nbsp;
+                          <button data-target="#J_roleEdit" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /角色编辑 -->
+
+           <!-- 权限管理 -->
+          <div class="modal fade " id="J_roleRights">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+              <div class="modal-body">
+                <form
+                	data-param="roleAuthority" 
+                    id="J_roleRightsForm"
+                    data-form="submit"
+                    data-action="saveAuth"
+                    novalidate="novalidate">
+                  <div class="table-form">
+                           	<div>
+								<ul id="tree" class="tree" style="overflow:auto;"></ul>
+							</div>
+						  <input name="roleId"  class="roleIdClass"  type="hidden"/>
+                          <button class="btn" type="submit">保存</button> &nbsp;
+                          <button data-target="#J_roleRights" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /权限管理 -->
+          
+        </div>
+        <!-- /page body -->
+
+      </div>
+      <!-- /page main -->
+
+    </div>
+    <!-- /page -->
+
+  </div>
+  <!-- /main -->
+
+</div>
+<!-- /wrapper -->
+</body>
+</html>
+
+<script data-main="js/role" src="js/base/require.min.js"></script>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:include="common/head :: #head"></head>
+
+<body>
+	<!-- wrapper -->
+	<div class="wrapper">
+
+		<!-- main -->
+		<div class="main">
+
+			<!-- page -->
+			<div class="page">
+				<!-- page main -->
+				<div class="pageMain">
+					<!-- position -->
+					<div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>违规举报</span>
+					</div>
+					<!-- /position -->
+					<!-- page body -->
+					<div class="pageB">
+						<form data-param="tvIllegalReport" data-content="#content"
+							id="J_tvBanner" data-template="#temp"
+							data-pagination="#pagination" data-action="findTvIllegalReport"
+							data-form="search" class="form" novalidate="novalidate">
+
+							<input name="reportId" type="text" pattern="[1-9]+"
+								data-chinese="举报ID" placeholder="举报ID" class="input width100"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+							
+							<input name="userId" type="text" pattern="[1-9]+"
+								data-chinese="举报人ID" placeholder="举报人ID" class="input width100"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+							
+							<input name="anchorId" type="text" pattern="[1-9]+"
+								data-chinese="被举报ID" placeholder="被举报ID" class="input width100"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+							
+							<select name="reportType" class="input width100" title="举报类别">
+		                        <option selected="selected" disabled="disabled">举报类别</option>
+		                        <option value="0">广告欺骗</option>
+		                        <option value="1">淫秽色情</option>
+		                        <option value="2">骚扰谩骂</option>
+		                        <option value="3">反动政治</option>
+		                        <option value="4">虚假竞猜</option>
+		                        <option value="5">其他内容</option>
+		                   	</select>
+							
+							<select name="dealStatus" class="input width100" title="处理状态">
+		                        <option selected="selected" disabled="disabled">处理状态</option>
+		                        <option value="0">未处理</option>
+		                        <option value="1">已处理</option>
+		                    </select>
+							
+							<input name="beginTime" id="startDate"
+								onfocus="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'#F{$dp.$D(\'endDate\')||\'%y-%M-%d\'}'})"
+								placeholder="举报开始时间" type="text" class="input" /> 
+							<span class="middle"> &nbsp; 至 &nbsp;</span> 
+							<input name="endTime" id="endDate"
+								onfocus="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'#F{$dp.$D(\'startDate\')}', maxDate:'%y-%M-%d'})"
+								placeholder="举报结束时间" type="text" class="input" /> 
+							
+							
+							<button type="submit" class="btn">查询</button>
+							<!-- 							<button type="button" class="btn btn-info J_addsave">添加</button> -->
+							<!-- <a href="cash.html" target="_blank"><button type="button" class="btn btn-danger J_extractCash" style="float:right;">提现处理</button></a> -->
+						</form>
+						<div class="table">
+							<table>
+								<thead>
+									<tr>
+										<th>举报ID</th>
+										<th>举报人ID</th>
+										<th>当前直播间ID</th>
+										<th>被举报ID</th>
+										<th>举报时间</th>
+										<th>举报类别</th>
+										<th>直播时长</th>
+										<th>举报内容</th>
+										<th>处理状态</th>
+										<th>处理时间</th>
+										<th>处理意见</th>
+										<th>处理人</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+							<script type="text/template" id="temp">
+             					{{each this val}}
+             					<tr>
+                					<td>{{val.reportId||''}}</td>
+									<td>{{val.userId||''}}</td>
+									<td>{{val.roomId||''}}</td>
+									<td>{{val.anchorId||''}}</td>
+									<td>{{val.ctimeStr||''}}</td>
+
+									<td>{{val.reportType||''}}</td>
+									<td></td>
+									<td>{{val.reportReason||''}}</td>
+									<td>{{val.dealStatus||''}}</td>
+									<td>{{val.dealTimeStr||'0'}}</td>
+
+									<td>{{val.dealRemark||''}}</td>
+									<td>{{val.dealUserStr||'0'}}</td>
+
+                					<td>
+										{{if val.dealStatus == "0"}}
+											<button data-id="{{val.reportType}}" type="button" class="btn btn-outline btn-sm wp_handles">处理</button>&nbsp;
+                  						{{/if}}
+                					</td>
+              					</tr>
+              					{{/each}}
+              					{{if this.length === 0}}
+              						<tr><td colspan="13">没有数据...</td></tr>
+              					{{/if}}
+							</script>
+
+						</div>
+						<!-- 分页 -->
+						<ul class="pagination" id="pagination"></ul>
+						<!-- /分页 -->
+					</div>
+					<!-- /page body -->
+				</div>
+				<!-- /page main -->
+			</div>
+			<!-- /page -->
+		</div>
+		<!-- /main -->
+	</div>
+	<!-- 	/wrapper -->
+
+
+	<!-- 用户举报弹框 -->
+	<div class="modal fade " id="wp_report">
+		<div class="modal-backdrop"></div>
+		<div class="modal-content">
+			<div class="modal-body">
+				<form data-param="tvIllegalReport" id="wp_reportform" data-form="submit" 
+				data-action="updateTvIllegalReport" novalidate="novalidate">
+					<div class="table-form">
+						<table>
+							<tr>
+								<th>举报内容：</th>
+								<td data-insert="reportReason"></td>
+							</tr>
+							<input type="hidden" name="reportId" data-insert="reportId" />
+							<input type="hidden" name="dealUser" th:value="${session.sessionUser.userId}" />
+<!-- 							<tr> -->
+<!-- 								<th>处理人：</th> -->
+<!-- 								<td><input required="required" -->
+<!-- 									th:value="${session.sessionUser.userName}" readonly="readonly" -->
+<!-- 									pattern="email" data-chinese="处理人" class="input" type="text" /></td> -->
+<!-- 							</tr> -->
+							<tr>
+								<th>处理意见：</th>
+								<td><textarea name="dealRemark" id="dealRemark"
+										minlength="6" maxlength="300" data-insert="dealRemark"
+										data-chinese="处理意见" class="input_textarea"
+										style='overflow: scroll; overflow-y: hidden; overflow-x: hidden'
+										onfocus="window.activeobj=this;this.clock=setInterval(function(){activeobj.style.height=activeobj.scrollHeight+'px';},200);"
+										onblur="clearInterval(this.clock);"></textarea></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button class="btn" type="submit">处理</button> &nbsp; <!--  <button class="btn btn-info" type="reset">重置</button> &nbsp;-->
+									<button data-target="#wp_report"
+										data-event="Storm.modal.hide" class="btn btn-warning"
+										type="button">取消</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- /用户反馈详情 -->
+
+</body>
+<script data-main="js/illegalReport" src="js/base/require.min.js"></script>
+</html>

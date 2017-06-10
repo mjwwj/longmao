@@ -1,0 +1,37 @@
+<script type="text/javascript">
+	if (self.frameElement && self.frameElement.tagName == "IFRAME") {
+		parent.location.reload();
+	}
+</script>
+<!DOCTYPE html>
+<html lang="en">
+
+  <div th:include="common/head :: #head"></div>
+
+<body>
+
+<div class="wrapper">
+ 
+  <div class="login">
+    <h1>帐户登录</h1>
+    <form
+        data-param="loginVO"
+        data-action="login"
+        novalidate="novalidate"
+        id="J_loginForm">
+      <input class="input input-block input-lg mt-20" required="required" spacechar="spacechar" minlength="5" data-chinese="账号" name="userName" placeholder="请输入账号" type="text" />
+      <input class="input input-block input-lg mt-20" data-md5="md5" required="required" spacechar="spacechar" minlength="6" data-chinese="密码" name="password" placeholder="请输入密码" type="password" />
+       <!-- <div class="row mt-20">
+        <div class="col-8">
+          <input type="text" class="input input-block input-lg" required="required" spacechar="spacechar" minlength="4" maxlength="8" data-chinese="验证码" name="vcode" />
+        </div>
+      <div class="col-4"><img class="height-lg" src="" id="J_code" alt="验证码" /> </div>  
+      </div>-->
+      <button class="btn btn-block btn-lg" type="submit">登录</button>
+    </form>
+  </div>
+ 
+</div>
+    <script data-main="js/login" src="js/base/require.min.js"></script>
+</body>
+</html>

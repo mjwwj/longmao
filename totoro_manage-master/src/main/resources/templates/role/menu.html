@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="common/head :: #head"></head>
+<body>
+
+	<!-- wrapper -->
+	<div class="wrapper">
+
+		<!-- main -->
+		<div class="main">
+
+			<!-- page -->
+			<div class="page">
+
+				<!-- page main -->
+				<div class="pageMain">
+				
+				<!-- position -->
+				<div class="position">
+					<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>菜单管理</span>
+				</div>
+				<!-- /position -->
+				
+					<!-- page body -->
+					<div class="pageB">
+
+						<button type="button" class="btn" id="J_menuQueryBtn">查询</button>
+						<button type="button" class="btn btn-warning" id="J_menuCreateBtn">新增菜单</button>
+
+						<div class="table">
+							<script type="text/template" id="temp">
+              {{each this value}}
+              <tr id="tr{{value.menuId}}">
+                <td>{{value.menuId||''}}</td>
+                <td>{{value.menuName||''}}</td>
+                <td>{{value.menuUrl||''}}</td>
+                <td>
+                    <button onclick="menuSort({{value.menuId}},1);" type="button" class="btn btn-outline btn-sm  menuUpBtn">↑</button>
+				{{if value.sort >0}}
+                    <button onclick="menuSort({{value.menuId}},-1)" type="button" class="btn btn-outline btn-sm  menuDownBtn">↓</button>
+				{{/if'}}
+               </td>
+                <td>
+                  <button onclick="openClose({{value.menuId}},this,{{index}});"  type="button" class="btn btn-outline btn-sm J_menuOpenBtn">展开</button>&nbsp;
+                  <button data-menu-id="{{value.menuId}}" type="button" class="btn btn-outline btn-sm J_menuEditBtn">修改</button> &nbsp;
+			    {{if value.menuId !=1}}
+                  <button onclick="delmenu({{value.menuId}},true);" type="button" class="btn btn-outline btn-sm J_menuDeleteBtn">删除</button>
+				{{/if'}}
+                </td>
+              </tr>
+              {{/each}}
+              {{if this.length === 0}}
+              <tr><td colspan="5">没有数据...</td></tr>
+              {{/if}}
+            </script>
+							<table>
+								<thead>
+									<tr>
+										<th>编号</th>
+										<th>名称</th>
+										<th>资源路径</th>
+										<th>排序</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+						</div>
+
+						<!-- 菜单创建 -->
+						<div class="modal fade " id="J_menuCreate">
+							<div class="modal-backdrop"></div>
+							<div class="modal-content">
+								<div class="modal-body">
+									<form data-param="roleMenu" id="J_menuCreateForm"
+										data-form="submit" data-action="saveMenu"
+										novalidate="novalidate">
+										<div class="table-form">
+											<table>
+												<tr>
+													<th>从属菜单：</th>
+													<td><select id="allParent" name="parentId"
+														class="input" title="从属菜单"></select> <script
+															type="text/template" id="allParentTemp">
+									<option selected value="">请选择菜单</option>
+									{{if this}}
+									    {{each this value}}
+									       <option value="{{value.menuId}}">{{value.menuName}}</option>
+									   {{/each}}
+									{{/if}}
+								</script></td>
+												</tr>
+												<tr>
+													<th>菜单名称：</th>
+													<td><input name="menuName" id="menuName"
+														required="required" minlength="2"
+														specialchar="specialchar" data-chinese="菜单名称"
+														class="input" type="text" /></td>
+												</tr>
+												<tr id="resCreate">
+													<th>资源路径：</th>
+													<td><input name="menuUrl" id="menuUrl"
+														required="required" minlength="2"
+														specialchar="specialchar" data-chinese="资源路径名称"
+														class="input" type="text" /></td>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<button class="btn menu_add" type="submit">保存</button>
+														&nbsp;
+														<button data-target="#J_menuCreate"
+															data-event="Storm.modal.hide" class="btn btn-warning"
+															type="button">取消</button>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!-- /菜单创建 -->
+
+						<!-- 菜单编辑 -->
+						<div class="modal fade " id="J_menuEdit">
+							<div class="modal-backdrop"></div>
+							<div class="modal-content">
+								<div class="modal-body">
+									<form data-param="roleMenu" id="J_menuEditForm"
+										data-form="submit" data-action="updateRoleMenu"
+										novalidate="novalidate">
+										<div class="table-form">
+											<table>
+												<tr>
+													<th>从属菜单：</th>
+													<td><input type="hidden" name="menuId"
+														data-insert="menuId" id="menuId" /> <select
+														id="parentSelect" name="parentId" class="input"
+														title="从属菜单"></select> <script type="text/template"
+															id="parentTemp">
+									<option disabled selected value="">请选择菜单</option>
+									{{if this}}
+									    {{each this value}}
+									       <option value="{{value.menuId}}">{{value.menuName}}</option>
+									   {{/each}}
+									{{/if}}
+								</script></td>
+												</tr>
+												<tr>
+													<th>菜单名称：</th>
+													<td><input name="menuName" data-insert="menuName"
+														data-chinese="菜单名称" class="input" type="text" /></td>
+												</tr>
+												<tr id="resEdit">
+													<th>资源路径：</th>
+													<td><input name="menuUrl" data-insert="menuUrl"
+														 minlength="2"
+														specialchar="specialchar" data-chinese="资源路径名称"
+														class="input" type="text" /></td>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<button class="btn" type="submit">保存</button> &nbsp;
+														<button data-target="#J_menuEdit"
+															data-event="Storm.modal.hide" class="btn btn-warning"
+															type="button">取消</button>
+													</td>
+												</tr>
+											</table>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!-- /菜单编辑 -->
+
+					</div>
+					<!-- /page body -->
+
+				</div>
+				<!-- /page main -->
+
+			</div>
+			<!-- /page -->
+
+		</div>
+		<!-- /main -->
+
+	</div>
+	<!-- /wrapper -->
+
+</body>
+</html>
+
+<script data-main="js/menu" src="js/base/require.min.js"></script>

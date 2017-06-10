@@ -1,0 +1,337 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "",
+      "type": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.EnvironmentConfig",
+      "name": "",
+      "type": "com.opengroup.longmao.gwcommon.configuration.properties.EnvironmentConfig"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "",
+      "type": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.QiNiuConfig",
+      "name": "",
+      "type": "com.opengroup.longmao.gwcommon.configuration.properties.QiNiuConfig"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.MessagePushConfig",
+      "name": "",
+      "type": "com.opengroup.longmao.gwcommon.configuration.properties.MessagePushConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.MessagePushConfig",
+      "name": "app-id",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.MessagePushConfig",
+      "name": "app-key",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "database",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "host",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-connection-properties",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-db-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-driver-class-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-filters",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-initial-size",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-max-active",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-max-wait",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-min-evictable-idle-time-millis",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-min-idle",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-mppspcs",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-pool-prepared-statements",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.MessagePushConfig",
+      "name": "master-secret",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-test-on-borrow",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-test-on-return",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-test-while-idle",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-time-between-eviction-runs-millis",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-type",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-use-global-data-source-stat",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-username",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "master-validation-query",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "max-idle",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "max-total",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "max-wait-millis",
+      "type": "java.lang.Long"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "min-idle",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "port",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.MessagePushConfig",
+      "name": "push-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.QiNiuConfig",
+      "name": "qiniu-access-key",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.QiNiuConfig",
+      "name": "qiniu-bucket-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.QiNiuConfig",
+      "name": "qiniu-domain-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.QiNiuConfig",
+      "name": "qiniu-file-max-size",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.QiNiuConfig",
+      "name": "qiniu-secret-key",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.EnvironmentConfig",
+      "name": "show-sql",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-connection-properties",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-db-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-driver-class-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-filters",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-initial-size",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-max-active",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-max-wait",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-min-evictable-idle-time-millis",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-min-idle",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-mppspcs",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-password",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-pool-prepared-statements",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-test-on-borrow",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-test-on-return",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-test-while-idle",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-time-between-eviction-runs-millis",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-type",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-use-global-data-source-stat",
+      "type": "java.lang.Boolean"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-username",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.DataSourceConfig",
+      "name": "slave-validation-query",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.EnvironmentConfig",
+      "name": "swagger-enable",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "timeout",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.EnvironmentConfig",
+      "name": "web-domain",
+      "type": "java.lang.String"
+    }
+  ]
+}

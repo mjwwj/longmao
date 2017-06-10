@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="common/head :: #head"></head>
+
+<body>
+	<!-- wrapper -->
+	<div class="wrapper">
+		<!-- main -->
+		<div class="main">
+			<!-- page -->
+			<div class="page">
+				
+				<!-- page main -->
+				<div class="pageMain">
+				
+					<!-- position -->
+					<div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>类型管理</span>
+					</div>
+					<!-- /position -->
+					
+					<!-- page body -->
+					<div class="pageB">
+						<form data-param="goodsTypeInfo" data-content="#content"
+							data-template="#temp" data-pagination="#pagination"
+							data-action="findAllGoodsTypeInfo" data-form="search" class="form"
+							novalidate="novalidate">
+							
+							<input name="goodsTypeId" type="text" pattern="[1-9]+"
+								data-chinese="类型ID" placeholder="类型ID" class="input"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" /> 
+							
+							<input name="name" type="text" data-chinese="类型名称" placeholder="类型名称" class="input"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+								
+							
+								
+							<button type="submit" class="btn">查询</button>
+							<button type="button" class="btn btn-info wp_addgoods">添加</button>
+<!-- 							<button type="reset" class="btn btn-info">重置</button> -->
+						</form>
+						<div class="table">
+							<script type="text/template" id="temp">
+              					{{each this value}}
+              						<tr>
+                						<td>{{value.goodsTypeId||''}}</td>
+                						<td>{{value.name||''}}</td>
+                						<td>{{value.cTimeStr||''}}</td>
+                						<td>{{value.uTimeStr||''}}</td>
+               							<td>{{value.isEnablestr||''}}</td>
+                						<td>
+                  							<button data-goods-type-id="{{value.goodsTypeId}}" type="button" class="btn btn-outline btn-sm wp_handle">修改</button> &nbsp;
+											<button data-goods-type-id="{{value.goodsTypeId}}" type="button" class="btn btn-outline btn-sm wp_detele">删除</button>
+										</td>
+              						</tr>
+              					{{/each}}
+              					{{if this.length === 0}}
+              						<tr><td colspan="6">没有数据...</td></tr>
+              					{{/if}}
+            				</script>
+							
+							<table>
+								<thead>
+									<tr>
+										<th>类型ID</th>
+										<th>类型名称</th>
+										<th>创建时间</th>
+										<th>修改时间</th>
+										<th>是否展示</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+						</div>
+						<!-- 分页 -->
+						<ul class="pagination" id="pagination"></ul>
+						<!-- /分页 -->
+					</div>
+					<!-- /page body -->
+				</div>
+				<!-- /page main -->
+			</div>
+			<!-- /page -->
+		</div>
+		<!-- /main -->
+	</div>
+	<!-- /wrapper -->
+
+	<!-- 修改商品 -->
+	<div class="modal fade " id="wp_goodshandle">
+		<div class="modal-backdrop"></div>
+		<div class="modal-content">
+			<div class="modal-body">
+				<form data-param="goodsTypeInfo" id="wp_goodsHandleform" data-form="submit"
+					data-action="updateGoodsTypeInfo" novalidate="novalidate">
+					<div class="table-form">
+						<table>
+							<tr>
+								<th>类型ID：</th>
+								<td data-insert="goodsTypeId"></td>
+							</tr>
+							<tr>
+								<th>类型名称：</th>
+								<td>
+									<input name="name" type="text" data-insert="name" required="required"
+										placeholder="类别名称" data-chinese="类别名称" class="input" />
+								</td>
+							</tr>
+							<tr>
+								<th>是否展示：</th>
+								<td>
+									<select name="isEnable" data-select="selectType" class="input" title="是否展示"></select>
+								</td>
+							</tr>
+                       		
+							<tr>
+								<td colspan="2">
+									<button class="btn" type="submit">修改</button> &nbsp;
+									<button data-target="#wp_goodshandle"
+										data-event="Storm.modal.hide" class="btn btn-warning" type="button">关闭</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 添加弹框 -->
+	<div class="modal fade " id="wp_goodsadd">
+		<div class="modal-backdrop"></div>
+		<div class="modal-content">
+			<div class="modal-body">
+				<form data-param="goodsTypeInfo" id="wp_goodsaddform" data-form="submit"
+					data-action="saveGoodsTypeInfo" novalidate="novalidate">
+					<div class="table-form">
+						<table>
+							<tr>
+								<th>类型名称：</th>
+								<td>
+									<input name="name" type="text" data-insert="name" required="required"
+										placeholder="类别名称" data-chinese="类别名称" class="input" />
+								</td>
+							</tr>
+							<tr>
+								<th>是否展示：</th>
+								<td>
+									<select name="isEnable" data-select="selectType" class="input" title="是否展示"></select>
+								</td>
+							</tr>
+                       		
+							<tr>
+								<td colspan="2">
+									<button class="btn" type="submit">添加</button> &nbsp;
+									<button data-target="#wp_goodsadd"
+										data-event="Storm.modal.hide" class="btn btn-warning" type="button">关闭</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+</body>
+</html>
+<script data-main="js/typeInfo" src="js/base/require.min.js"></script>

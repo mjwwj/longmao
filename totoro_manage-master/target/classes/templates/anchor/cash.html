@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head th:include="common/head :: #head"></head>
+  
+<body>
+    <!-- wrapper -->
+    <div class="wrapper">
+       
+        <!-- main -->
+        <div class="main">
+        
+            <!-- page -->
+            <div class="page">
+                <!-- page main -->
+                <div class="pageMain">
+                
+	                <div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>提现处理</span>
+					</div>
+					
+                    <!-- page body -->
+                    <div class="pageB">
+                        <form data-param="orderVO" data-content="#content"
+                            data-template="#temp" data-pagination="#pagination"
+                            data-action="findAllOrder" data-form="search" class="form"
+                            novalidate="novalidate">
+                            <input name="userIdVO" type="text" placeholder="用户ID"
+                                data-chinese="userIdVO" class="input" />
+                            <input name="timeC" type="text" placeholder="提现时间"
+                                data-chinese="timeC" class="input" onclick="WdatePicker()" readonly="readonly" />	 <select
+                                name="statusVO" class="input" title="提现状态">
+                                <option selected="selected" disabled="disabled">提现状态</option>
+                                <option value="0">失败</option>
+                                <option value="1">处理中</option>
+                                <option value="2">成功</option>
+                            </select>
+                            <button type="submit" class="btn">查询</button>
+                            <button type="reset" class="btn btn-info">重置</button>
+                            <button type="button" class="btn exprotBtn">导出</button>
+                        </form>
+                        <div class="table">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>提现编号</th>
+                                        <th>主播ID</th>
+                                        <th>提现金额(元)</th>
+                                        <th>平台分成(元)</th>
+                                        <th>提现时间</th>
+                                        <th>提现转账信息</th>
+                                        <th>提现状态</th>
+                                        <th>操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="content"></tbody>
+                            </table>
+            <script type="text/template" id="temp">
+              {{each this val}}
+              <tr>
+                <td>{{val.orderId||''}}</td>
+                <td>{{val.buyerUid||''}}</td>
+                <td>{{val.orderPrice||'0.00'}}</td>
+                <td>{{((val.payPrice * 100) - (val.orderPrice * 100)) / 100||'0.00'}}</td>
+                <td>{{val.timeC||''}}</td>
+                <td>{{val.param||''}}</td>
+            {{if 4 === val.orderStatus}}
+                <td>转账成功</td>
+                <td>&nbsp;</td>
+            {{else if 5 === val.orderStatus}}
+                <td>转账失败</td>
+                <td>&nbsp;</td>
+            {{else}}
+                <td>处理中</td>
+                <td>
+                  <button data-price="{{val.orderPrice}}" data-time="{{val.timeC}}" data-param="{{val.param}}" 
+                    data-oid="{{val.orderId}}" data-uid="{{val.buyerUid}}" 
+                    type="button" class="btn btn-danger btn-sm J_viewBtn">处理提现</button>
+                </td>
+            {{/if}}
+              </tr>
+              {{/each}}
+              {{if this.length === 0}}
+              <tr><td colspan="8">没有数据...</td></tr>
+              {{/if}}
+            </script>
+                            
+                        </div>
+                        <!-- 分页 -->
+                        <ul class="pagination" id="pagination"></ul>
+                        <!-- /分页 -->
+                        <!-- 主播提现记录 开始 -->
+                        <div class="modal fade " id="J_showCash">
+                            <div class="modal-backdrop"></div>
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="table-form table-center table">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>提现编号：</th>
+                                                    <td id="o_oid"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>主播ID：</th>
+                                                    <td id="o_uid"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>提现金额：</th>
+                                                    <td id="o_price"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>提现转账信息：</th>
+                                                    <td id="o_param"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>提现时间：</th>
+                                                    <td id="o_time"></td>
+                                                </tr>
+                                                <tr>
+                                                    <th>失败原因：</th>
+                                                    <td>
+                                                     <textarea id="o_remark" rows="4" cols="20" placeholder="失败原因!" maxlength="15"></textarea>
+                                                    </td>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="modal-footer text-center">
+                                    <button data-oid="" type="button" class="btn btn-danger J_extractCashSuccess" style="margin-right:30px">转账成功</button>
+                                    <button data-target="#J_showCash" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+                                    <button data-oid="" type="button" class="btn btn-danger J_extractCashFail" style="margin-left:30px">转账失败</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 主播提现记录 结束 -->
+                    </div>
+                    <!-- /page body -->
+                </div>
+                <!-- /page main -->
+            </div>
+            <!-- /page -->
+        </div>
+        <!-- /main -->
+    </div>
+    <!-- /wrapper -->
+    
+</body>
+</html>
+<script data-main="js/cash" src="js/base/require.min.js"></script>

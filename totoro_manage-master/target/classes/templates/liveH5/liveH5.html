@@ -1,0 +1,232 @@
+<!DOCTYPE html>	
+<html lang="en">
+
+<head th:include="common/head :: #head"></head>
+
+<body>
+	<!-- wrapper -->
+	<div class="wrapper">
+
+		<!-- main -->
+		<div class="main">
+
+			<!-- page -->
+			<div class="page">
+				<!-- page main -->
+				<div class="pageMain">
+					<!-- position -->
+					<div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>直播间H5</span>
+					</div>
+					<!-- /position -->
+					<!-- page body -->
+					<div class="pageB">
+						<form data-param="liveH5" data-content="#content" 
+							data-template="#temp" data-pagination="#pagination"
+							data-action="findAllLiveH5" data-form="search" class="form" novalidate="novalidate">
+							
+							<input name="id" type="text" pattern="[1-9]+"
+								data-chinese="活动ID" placeholder="活动ID" class="input"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+								
+							<input name="activeName" type="text" data-chinese="活动名称" placeholder="活动名称" class="input" />
+							
+							<select name="isEnable" class="input" title="启用状态">
+                                <option selected="selected" disabled="disabled">启用状态</option>
+                                <option value="1">是</option>
+                                <option value="2">否</option>
+                            </select>
+							
+							<button type="submit" class="btn">查询</button>
+							<button type="button" class="btn btn-info wp_addsave">添加</button>
+							<!-- <a href="cash.html" target="_blank"><button type="button" class="btn btn-danger J_extractCash" style="float:right;">提现处理</button></a> -->
+						</form>
+						<div class="table">
+							<table>
+								<thead>
+									<tr>
+										<th>活动ID</th>
+										<th>活动名称</th>
+										<th>活动图标</th>
+										<th>活动链接</th>
+										<th>启用状态</th>
+										<th>活动上架时间</th>
+										<th>活动下架时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+							<script type="text/template" id="temp">
+             					{{each this val}}
+             					<tr>
+                					<td>{{val.id||''}}</td>
+									<td>{{val.activeName||''}}</td>
+									<td>{{if val.activeIco != ''}}<img class="showload_img" src="{{val.activeIco}}"><img class="actvie_bigimg" src="{{val.activeIco}}">{{/if}}</td>
+									<td>{{val.activeLink||''}}</td>
+									<td>{{val.isEnableStr||''}}</td>
+									<td>{{val.upTimeStr||''}}</td>
+									<td>{{val.downTimeStr||'0'}}</td>
+                					<td>
+				  						<button data-id="{{val.id}}" type="button" class="btn btn-primary btn-sm wp_modifyBtn">修改</button>
+                  						<button data-id="{{val.id}}" type="button" class="btn btn-info btn-sm wp_deleteBtn">删除</button>
+                					</td>
+              					</tr>
+              					{{/each}}
+              					{{if this.length === 0}}
+              						<tr><td colspan="9">没有数据...</td></tr>
+              					{{/if}}
+							</script>
+				
+							</div>
+							<!-- 分页 -->
+							<ul class="pagination" id="pagination"></ul>
+							<!-- /分页 -->
+
+
+
+						<!-- 添加H5 活动 开始 -->
+						<div class="modal fade" id="wp_showH5">
+							<div class="modal-backdrop"></div>
+							<div class="modal-content">
+							
+								<form id="wp_activeupload" enctype="multipart/form-data">
+									
+									<div class="modal-body">
+										<div class="table-form table-center">
+											<table>
+												<tbody>
+													<tr>
+														<th>活动图标：</th>
+														<td id="active_divimg">
+															<img class="upload_img upload_width156" id="active_showimg" src="http://opq77mx3q.bkt.clouddn.com/170515-156-156.png">
+															<input type="file" name="file" id="active_upimg" placeholder="banner图" data-chinese="banner图" class="input_file" />
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</form>
+							
+							
+								<!-- 添加活动图标 -->
+								<form id="wp_addActive" data-param="liveH5VO" 
+									data-action="saveLiveH5" data-form="submit" novalidate="novalidate">
+									
+									<div class="modal-body">
+										<div class="table-form table-center">
+											<table>
+												<tbody>
+													<tr>
+														<th>活动名称：</th>
+														<td><input name="activeName" type="text" required="required" data-insert="activeName" 
+															placeholder="活动名称" data-chinese="活动名称" class="input" /></td>
+													</tr>
+													<input name="activeIco" type="hidden" data-insert="activeIco" required="required" />
+													<tr>
+														<th>活动链接：</th>
+														<td><input name="activeLink" type="text" required="required" data-insert="activeLink"
+															pattern="(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?"
+															placeholder="活动链接" data-chinese="活动链接" class="input" /></td>
+													</tr>
+													<tr>
+														<th>活动启用：</th>
+														<td>
+															<select name="isEnable" class="input" title="活动启用">
+																<option value="1" selected="selected">已上架</option>
+																<option value="2">未上架</option>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<th>活动上架时间：</th>
+														<td><input name="upTimeStr" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" data-insert="upTimeStr" required="required" 
+															placeholder="活动上架时间" data-chinese="活动上架时间" class="input"  /></td>
+													</tr>
+													<tr>
+														<th>活动下架时间：</th>
+														<td><input name="downTimeStr" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" data-insert="downTimeStr" required="required" 
+															placeholder="活动下架时间" data-chinese="活动下架时间" class="input" /></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="modal-footer text-center">
+										<button type="submit" class="btn">添加</button> &nbsp;
+										<button class="btn btn-info" type="reset">重置</button> &nbsp;
+										<button data-target="#wp_showH5" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+									</div>
+								</form>
+								
+								
+								<!-- 修改活动图标 -->
+								<form id="wp_ModifyActive" data-param="liveH5" style="display: none;"
+									data-action="updateLiveH5" data-form="submit" novalidate="novalidate">
+									
+									<div class="modal-body">
+										<div class="table-form table-center">
+											<table>
+												<tbody>
+													<input name="id" type="hidden" data-insert="id" required="required" />
+													<tr>
+														<th>活动名称：</th>
+														<td><input name="activeName" type="text" data-insert="activeName" required="required"
+															placeholder="活动名称" data-chinese="活动名称" class="input" /></td>
+													</tr>
+													<input name="activeIco" type="hidden" data-insert="activeIco" required="required" />
+													<tr>
+														<th>活动链接：</th>
+														<td><input name="activeLink" type="text" data-insert="activeLink" required="required"
+															pattern="(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?"
+															placeholder="活动链接" data-chinese="活动链接" class="input" /></td>
+													</tr>
+													<tr>
+														<th>活动启用：</th>
+														<td>
+															<select name="isEnable" class="input isEnable_class" title="活动启用">
+																<option value="1" selected="selected">已上架</option>
+																<option value="2">未上架</option>
+															</select>
+														</td>
+													</tr>
+													<tr>
+														<th>活动上架时间：</th>
+														<td><input name="upTimeStr" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" data-insert="upTimeStr" required="required"
+															placeholder="活动上架时间" data-chinese="活动上架时间" class="input"  /></td>
+													</tr>
+													<tr>
+														<th>活动下架时间：</th>
+														<td><input name="downTimeStr" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" data-insert="downTimeStr" required="required"
+															placeholder="活动下架时间" data-chinese="活动下架时间" class="input" /></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									<div class="modal-footer text-center">
+										<button type="submit" class="btn" style="margin-right: 30px">修改</button>
+										<button data-target="#wp_showH5" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+									</div>
+								</form>
+								
+							</div>
+						</div>
+						<!-- 添加H5 活动 结束 -->
+
+					</div>
+					<!-- /page body -->
+				</div>
+				<!-- /page main -->
+			</div>
+			<!-- /page -->
+		</div>
+		<!-- /main -->
+	</div>
+	<!-- 	/wrapper -->
+	
+	
+</body>
+<script data-main="js/liveH5" src="js/base/require.min.js"></script>
+</html>

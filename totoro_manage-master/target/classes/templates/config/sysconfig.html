@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="common/head :: #head"></head>
+
+<body>
+	<!-- wrapper -->
+	<div class="wrapper">
+		<!-- main -->
+		<div class="main">
+			<!-- page -->
+			<div class="page">
+				<!-- page main -->
+				<div class="pageMain">
+					<!-- position -->
+					<div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>系统配置</span>
+					</div>
+					<!-- /position -->
+					<!-- page body -->
+					<div class="pageB">
+						<!-- 系统配置开始 -->
+						<div class="modal-content sysconfig">
+							<div class="modal-body">
+							<form data-content="#content"
+							data-template="#temp" data-pagination="#pagination"
+							data-action="findSysConfig" data-form="search" class="form"
+							novalidate="novalidate">
+							<button type="submit" class="btn" style="display:none">查询</button>
+							</form>
+							  <div class="table">
+							<table>
+								<thead>
+									<tr>
+										<th>说明</th>
+										<th>Key</th>
+										<th>Value</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+							<script type="text/template" id="temp">
+              					{{each this val}}
+              					<tr>
+									<td>{{val.remark||''}}</td>
+                					<td><input id="key_{{val.id||''}}" type="text" readonly="readonly" class="input" value="{{val.name||''}}" /></td>
+									<td><input id="val_{{val.id||''}}" type="text" class="input" value="{{val.val||''}}" /></td>
+									<td><button data-id="{{val.id}}" type="button" class="btn btn-primary btn-sm J_editBtn">修改</button></td>
+              					</tr>
+              					{{/each}}
+              					{{if this.length === 0}}
+              					<tr><td colspan="4">没有数据...</td></tr>
+              					{{/if}}
+							</script>
+						</div>
+							</div>
+						</div>
+						<!-- 系统配置结束 -->
+					</div>
+					<!-- /page body -->
+				</div>
+				<!-- /page main -->
+			</div>
+			<!-- /page -->
+		</div>
+		<!-- /main -->
+	</div>
+	<!-- /wrapper -->
+
+	<!-- 用户编辑 -->
+	<div class="modal fade " id="J_adminEdit">
+		<div class="modal-backdrop"></div>
+	</div>
+	<!-- /用户编辑 -->
+</body>
+</html>
+<script data-main="js/sysconfig" src="js/base/require.min.js"></script>

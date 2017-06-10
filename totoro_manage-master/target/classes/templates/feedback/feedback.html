@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="common/head :: #head"></head>
+
+<body>
+	<!-- wrapper -->
+	<div class="wrapper">
+		<!-- main -->
+		<div class="main">
+			<!-- page -->
+			<div class="page">
+				
+				<!-- page main -->
+				<div class="pageMain">
+				
+					<!-- position -->
+					<div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>意见反馈</span>
+					</div>
+					<!-- /position -->
+					
+					<!-- page body -->
+					<div class="pageB">
+						<form data-param="tvFeedback" data-content="#content"
+							data-template="#temp" data-pagination="#pagination"
+							data-action="findTvFeedback" data-form="search" class="form"
+							novalidate="novalidate">
+							<input name="userId" type="text" pattern="[1-9]+"
+								data-chinese="用户ID" placeholder="用户编号" class="input"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+								 
+							<input name="systemType" type="text" 
+								data-chinese="系统" placeholder="系统" class="input" /> 
+								
+								
+<!-- 							<input name="userName" type="text" placeholder="用户编号" class="input" /> -->
+							<button type="submit" class="btn">查询</button>
+<!-- 							<button type="reset" class="btn btn-info">重置</button> -->
+						</form>
+						<div class="table">
+							<script type="text/template" id="temp">
+              					{{each this value}}
+              						<tr>
+                						<td>{{value.userId||''}}</td>
+                						<td>{{value.systemType||''}}</td>
+                						<td>{{value.systemVersion||''}}</td>
+                						<td>{{value.ctimeStr||''}}</td>
+               							<td>{{value.feedbackType||''}}</td>
+                						<td>{{value.dealStatus||''}}</td>
+                						<td>{{value.dealUserStr||''}}</td>
+               							<td>{{value.dealTimeStr||''}}</td>
+                						<td>
+                  							<button data-id="{{value.feedbackId}}" type="button" class="btn btn-outline btn-sm wp_handles">详情</button> &nbsp;
+											{{if value.dealStatus == "0"}}{{/if}}
+										</td>
+              						</tr>
+              					{{/each}}
+              					{{if this.length === 0}}
+              						<tr><td colspan="10">没有数据...</td></tr>
+              					{{/if}}
+            				</script>
+							
+							<table>
+								<thead>
+									<tr>
+										<th>用户ID</th>
+										<th>系统</th>
+										<th>系统版本号</th>
+										<th>反馈时间</th>
+										<th>反馈类型</th>
+										<th>处理状态</th>
+										<th>处理管理员</th>
+										<th>处理时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+						</div>
+						<!-- 分页 -->
+						<ul class="pagination" id="pagination"></ul>
+						<!-- /分页 -->
+					</div>
+					<!-- /page body -->
+				</div>
+				<!-- /page main -->
+			</div>
+			<!-- /page -->
+		</div>
+		<!-- /main -->
+	</div>
+	<!-- /wrapper -->
+
+	<!-- 用户反馈详情处理 -->
+	<div class="modal fade " id="wp_feedback">
+		<div class="modal-backdrop"></div>
+		<div class="modal-content">
+			<div class="modal-body">
+				<form data-param="tvFeedback" id="wp_feedbackform" data-form="submit"
+					data-action="updateTvFeedback" novalidate="novalidate">
+					<div class="table-form">
+						<table>
+							<tr>
+								<th>渠道号ID：</th>
+								<td data-insert="channelNum"></td>
+							</tr>
+							<tr>
+								<th>手机型号：</th>
+								<td data-insert="brandType"></td>
+							</tr>
+							<tr>
+								<th>联系方式：</th>
+								<td data-insert="contactWay"></td>
+							</tr>
+							<tr>
+								<th>反馈内容：</th>
+								<td data-insert="feedbackRemark"></td>
+							</tr>
+							<tr>
+								<th>图片：</th>
+								<td id="feedbackimg_list">
+									
+								</td>
+							</tr>
+							<script type="text/template" id="feedbackimg_Temp">
+                            	{{each this v}}
+                                	<img class="feedbackimg_width" src="{{v}}">
+									<img class="feedbackimg_none" src="{{v}}">
+                            	{{/each}}
+                             	{{if this.length === 0}}
+                                	图片为空...
+                             	{{/if}}
+                       		</script>
+                       		
+							<input type="hidden" name="feedbackId" data-insert="feedbackId" />
+							<input type="hidden" name="dealUser" th:value="${session.sessionUser.userId}" />
+<!-- 							<tr> -->
+<!-- 								<th>处理人：</th> -->
+<!-- 								<td><input required="required" th:value="${session.sessionUser.userName}" -->
+<!-- 									readonly="readonly" data-chinese="处理人" class="input" type="text" /></td> -->
+							</tr>
+							<tr id="handle_time">
+                                <th>处理时间：</th>
+                                <td data-insert="dealTimeStr"></td>
+                            </tr>
+							<tr>
+								<th>处理意见：</th>
+								<td><textarea name="dealRemark" id="dealRemark" minlength="6" maxlength="300" data-insert="dealRemark"
+									data-chinese="处理意见" class="input_textarea" required="required"
+									style='overflow:scroll;overflow-y:hidden;overflow-x:hidden'  
+									onfocus="window.activeobj=this;this.clock=setInterval(function(){activeobj.style.height=activeobj.scrollHeight+'px';},200);" 
+									onblur="clearInterval(this.clock);"></textarea></td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<button class="btn" type="submit">处理</button> &nbsp;
+									<button data-target="#wp_feedback"
+										data-event="Storm.modal.hide" class="btn btn-warning" type="button">关闭</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- /用户反馈详情 -->
+	
+</body>
+</html>
+<script data-main="js/feedback" src="js/base/require.min.js"></script>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--设置log4j2的自身log级别为warn-->
+<Configuration status="WARN" monitorInterval="1">
+    <!-- 定义常量 -->
+	<Properties>
+	    <!-- 定义日志级别 -->
+		<Property name="log4j2.level">info</Property>
+		<!-- 定义GWSLOG日志文件和路径 -->
+		<Property name="GWSLOG">log/gws.log</Property>
+		<!-- 定义SQLLOG日志文件和路径 -->
+		<Property name="SQLLOG">log/sql.log</Property>
+		<!-- 定义ACCESSLOG日志文件和路径 -->
+		<Property name="ACCESSLOG">log/access.log</Property>
+		<!-- 将日志输出到日志文件 -->
+		<Property name="GWSREF">GWS_LOG</Property>
+		<!-- 将日志输出到控制台 -->
+	    <Property name="GWSREF">STDOUT</Property> 
+	</Properties>
+	
+	<!-- 定义日志规则 -->
+	<Appenders> 
+         <!--设置log4j2将日志输出到控制台规则,并定义格式-->
+        <Console name="STDOUT" target="SYSTEM_OUT" follow="true">
+           <PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5p: %m%n"/>
+        </Console>
+        
+		<RollingFile name="GWS_LOG" fileName="${GWSLOG}" filePattern="${GWSLOG}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5p: %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="24" modulate="true" />
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="100" />
+		</RollingFile>
+		
+		<RollingFile name="SQL_LOG" fileName="${SQLLOG}" filePattern="${SQLLOG}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5p: %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="24" modulate="true" />
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="100" />
+		</RollingFile>
+		
+		<RollingFile name="ACCESS_LOG" fileName="${ACCESSLOG}" filePattern="${ACCESSLOG}-%d{yyyy-MM-dd}-%i.log">
+			<PatternLayout pattern="[%d{yyyy-MM-dd HH:mm:ss}] %-5p: %m%n" />
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="24" modulate="true" />
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="100" />
+		</RollingFile>
+		
+		<Async name="ASYNC">
+			<AppenderRef ref="SQL_LOG" />
+			<AppenderRef ref="ACCESS_LOG" />
+			<AppenderRef ref="${GWSREF}" />
+		</Async>
+		
+	</Appenders>
+	
+	<Loggers>
+        
+		<Logger name="org.springframework.security" level="warn"
+			additivity="false">
+			<appender-ref ref="${GWSREF}" />
+		</Logger>
+		
+		<Logger name="org.springframework" level="error" additivity="false">
+			<appender-ref ref="${GWSREF}" />
+		</Logger>
+		
+		<Logger name="org.apache" level="warn" additivity="false">
+			<appender-ref ref="${GWSREF}" />
+		</Logger>
+		
+		<Logger name="org.thymeleaf" level="warn" additivity="false">
+			<appender-ref ref="${GWSREF}" />
+		</Logger>
+		
+		<Logger name="org.hibernate" level="error" additivity="false">
+			<appender-ref ref="${GWSREF}" />
+		</Logger>
+		
+		<logger name="GWS" level="info" additivity="false">
+			<appender-ref ref="${GWSREF}" />
+		</logger>
+		
+		<logger name="SQLTRACE" level="info" additivity="false">
+			<appender-ref ref="SQL_LOG" />
+		</logger>
+
+		<logger name="ACCESSTRACE" level="info" additivity="false">
+			<appender-ref ref="ACCESS_LOG" />
+		</logger>
+		
+		<!-- Alibaba Loggers 在自己的appender里输出--> -->
+        <Logger name="druid.sql.DataSource" level="info" additivity="false">
+			<appender-ref ref="${GWSREF}" />
+		</Logger>
+		<Logger name="com.alibaba.druid" level="error" additivity="false">
+			<appender-ref ref="${GWSREF}" />
+		</Logger>
+		
+		<logger name="GWS" level="info" additivity="false">
+			<appender-ref ref="${GWSREF}" />
+		</logger>
+		
+		<logger name="SQLTRACE" level="info" additivity="false">
+			<appender-ref ref="SQL_LOG" />
+		</logger>
+
+		<logger name="ACCESSTRACE" level="info" additivity="false">
+			<appender-ref ref="ACCESS_LOG" />
+		</logger>
+
+		<!-- Alibaba Loggers 在自己的appender里输出-->
+		<Logger name="druid.sql" level="debug" additivity="false">
+			<appender-ref ref="SQL_LOG" />
+		</Logger>
+		<Logger name="druid.sql.Connection" level="debug" additivity="false">
+			<appender-ref ref="SQL_LOG" />
+		</Logger>
+		<Logger name="druid.sql.Statement" level="debug" additivity="false">
+			<appender-ref ref="SQL_LOG" />
+		</Logger>
+		<Logger name="druid.sql.ResultSet" level="debug" additivity="false">
+			<appender-ref ref="SQL_LOG" />
+		</Logger>
+		<Logger name="druid.sql.DataSource" level="debug" additivity="false">
+			<appender-ref ref="SQL_LOG" />
+		</Logger>
+		<Logger name="com.druid.sql" level="warn" additivity="false">
+			<appender-ref ref="SQL_LOG" />
+		</Logger>
+		<Logger name="com.alibaba.druid" level="error" additivity="false">
+			<appender-ref ref="SQL_LOG" />
+		</Logger>
+
+		<Root level="${sys:log4j2.level}">
+			<AppenderRef ref="ASYNC" /> 
+		</Root>
+	</Loggers>
+		
+</Configuration>

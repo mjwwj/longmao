@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head th:include="common/head :: #head"></head>
+	<body>
+		<!-- wrapper -->
+		<div class="wrapper">
+			<!-- sidebar -->
+			<div th:include="common/left :: #sidebar"></div>
+			<!-- /sidebar -->
+			<!-- main -->
+			<div class="main">
+				<!-- header -->
+				<div th:include="common/header :: #header"></div>
+				<!-- /header -->
+				<iframe class="autoHeight" name="mainFrame" id="mainFrame"
+					frameborder="0" width="100%" height="100%" scrolling="no"
+					src="/main" onload="autoHeight()"></iframe>
+			</div>
+			<!-- /main -->
+		</div>
+		<!-- /wrapper -->
+	</body>
+</html>
+
+<script type="text/javascript">
+	function autoHeight() {//iframe自适应高度
+	    var ug_frame = document.getElementById('mainFrame');
+	    ug_frame.height = '700';
+	    if (ug_frame == null) return
+	    window.setInterval(function() {
+	        try {
+	            var bHeight = ug_frame.contentWindow.document.body.scrollHeight
+	            var dHeight = ug_frame.contentWindow.document.documentElement.scrollHeight
+	            var height = Math.min(bHeight, dHeight)
+	            ug_frame.height = height
+	        } catch (e) {}
+	    }, 200)
+	}
+</script>
+<script data-main="js/index.js" src="js/base/require.min.js"></script>

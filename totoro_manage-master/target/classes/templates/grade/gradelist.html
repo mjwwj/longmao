@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head th:include="common/head :: #head"></head>
+  
+<body>
+
+<!-- wrapper -->
+<div class="wrapper">
+
+	<!-- main -->
+	<div class="main">
+
+		<!-- page -->
+		<div class="page">
+				<!-- page main -->
+				<div class="pageMain">
+				
+					<div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>经验值列表</span>
+					</div>
+					
+					<!-- page body -->
+					<div class="pageB">
+						<form data-param="userGradeRule" data-content="#content"
+							data-template="#temp" data-pagination="#pagination"
+							data-action="findUserGradeRule" data-form="search" class="form"
+							novalidate="novalidate">
+							<input name="grade" type="text" placeholder="等级"
+								data-chinese="grade" class="input" />
+							<input name="empirical" type="text" placeholder="经验值"
+								data-chinese="empirical" class="input" />		
+							<input name="alias" type="text" placeholder="等级别名"
+								data-chinese="alias" class="input" />
+							<button type="submit" class="btn">查询</button>
+							<button type="reset" class="btn btn-info">重置</button>
+							<button type="button" class="btn btn-danger J_showAddgradeBtn" style="float:right;">新增等级</button>
+						</form>
+						<div class="table">
+							<table>
+								<thead>
+									<tr>
+										<th>等级</th>
+										<th>别名</th>
+										<th>最小经验值(大于等于)</th>
+										<th>最大经验值(小于)</th>
+										<th>创建时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+			<script type="text/template" id="temp">
+              {{each this val}}
+              <tr>
+                <td>{{val.grade||'0'}}</td>
+				<td>{{val.alias||'青铜'}}</td>
+				<td>{{val.minVal||'0'}}</td>
+				<td>{{val.maxVal||'0'}}</td>
+				<td>{{val.timeC||''}}</td>
+                <td>
+				  <button data-id="{{val.id}}" type="button" class="btn btn-primary btn-sm J_viewBtn">编辑</button>
+                </td>
+              </tr>
+              {{/each}}
+              {{if this.length === 0}}
+              <tr><td colspan="6">没有数据...</td></tr>
+              {{/if}}
+			</script>
+							
+						</div>
+						<!-- 分页 -->
+						<ul class="pagination" id="pagination"></ul>
+						<!-- /分页 -->
+						<!-- 新增规则 开始 -->
+						<div class="modal fade " id="J_showAddgrade">
+							<div class="modal-backdrop"></div>
+							<div class="modal-content">
+							<form id="J_addGrade" data-param="grade" data-action="saveUserGradeRule" data-form="submit" novalidate="novalidate">
+								<div class="modal-body">
+									<div class="table-form table-center">
+										<table>
+											<tbody>
+												<tr>
+													<th>用户等级：</th>
+													<td><input name="grade" required="required" type="text" placeholder="用户等级"
+								data-chinese="用户等级" class="input" /></td>
+												</tr>
+												<tr>
+													<th>最小经验值：</th>
+													<td><input name="minVal" required="required" type="text" placeholder="最小经验值"
+								data-chinese="最小经验值" class="input" /></td>
+												</tr>
+												<tr>
+													<th>最大经验值：</th>
+													<td><input name="maxVal" required="required" type="text" placeholder="最大经验值"
+								data-chinese="最大经验值" class="input" /></td>
+												</tr>
+												<tr>
+													<th>等级别名：</th>
+													<td><input name="alias" required="required" type="text" placeholder="等级别名"
+								data-chinese="等级别名" class="input" /></td>
+												</tr>
+												<tr>
+													<th>等级说明：</th>
+													<td><input name="note" type="text" placeholder="等级说明"
+								data-chinese="等级说明" class="input" /></td>
+												</tr>
+												<tr>
+													<th>是否最高：</th>
+													<td>
+														<select name="isMax" class="input" title="是否最高等级">
+															<option value="0">否</option>
+															<option value="1">是</option>
+														</select>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="modal-footer text-center">
+									<button type="submit" class="btn" style="margin-right:30px">新增</button>
+									<button data-target="#J_showAddgrade" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+								</div>
+								</form>
+							</div>
+						</div>
+						<!-- 新增规则 结束 -->
+						<!-- 规则详情 开始 -->
+						<div class="modal fade " id="J_detail">
+							<div class="modal-backdrop"></div>
+							<div class="modal-content">
+							<form id="J_editGrade" data-param="grade" data-action="updateUserGradeRule" data-form="submit" novalidate="novalidate">
+								<div class="modal-body">
+									<div class="table-form table-center">
+										<table>
+											<tbody>
+												<tr>
+													<th>用户等级：</th>
+													<td><input name="grade" required="required" type="text" placeholder="用户等级"
+								data-chinese="用户等级" class="input" data-insert="grade"/></td>
+												</tr>
+												<tr>
+													<th>最小经验值：</th>
+													<td><input name="minVal" required="required" type="text" placeholder="最小经验值"
+								data-chinese="最小经验值" class="input" data-insert="minVal"/></td>
+												</tr>
+												<tr>
+													<th>最大经验值：</th>
+													<td><input name="maxVal" required="required" type="text" placeholder="最大经验值"
+								data-chinese="最大经验值" class="input" data-insert="maxVal"/></td>
+												</tr>
+												<tr>
+													<th>等级别名：</th>
+													<td><input name="alias" required="required" type="text" placeholder="等级别名"
+								data-chinese="等级别名" class="input" data-insert="alias"/></td>
+												</tr>
+												<tr>
+													<th>等级说明：</th>
+													<td><input name="note" type="text" placeholder="等级说明"
+								data-chinese="等级说明" class="input" data-insert="note"/></td>
+												</tr>
+												<tr>
+													<th>是否最高：</th>
+													<td>
+														<select name="isMax" class="input isMax" title="是否最高等级">
+															<option value="0">否</option>
+															<option value="1">是</option>
+														</select>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="modal-footer text-center">
+									<input name="id" id="add_Id" data-insert="id" required="required" type="hidden" class="input" />
+									<button type="submit" class="btn" style="margin-right:30px">修改</button>
+									<button data-target="#J_detail" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+								</div>
+								</form>
+							</div>
+						</div>
+						<!-- 规则详情 结束 -->
+					</div>
+					<!-- /page body -->
+				</div>
+				<!-- /page main -->
+			</div>
+			<!-- /page -->
+		</div>
+		<!-- /main -->
+	</div>
+	<!-- /wrapper -->
+	
+</body>
+</html>
+
+<script data-main="js/grade" src="js/base/require.min.js"></script>

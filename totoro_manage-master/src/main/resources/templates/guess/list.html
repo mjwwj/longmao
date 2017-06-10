@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head th:include="common/head :: #head"></head>
+<body>
+
+<!-- wrapper -->
+<div class="wrapper">
+   
+	<!-- main -->
+	<div class="main">
+	     
+		<!-- page -->
+		<div class="page">
+
+			<!-- page main -->
+			<div class="pageMain">
+			
+				<div class="position">
+					<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>竞猜列表</span>
+				</div>
+				
+				<!-- page body -->
+				<div class="pageB">
+
+					<form data-param="guessInfo" data-content="#content"
+						data-template="#temp" data-pagination="#pagination"
+						data-action="findAllGuess" data-form="search" class="form"
+						novalidate="novalidate">
+
+						<input name="guessId" type="text" placeholder="竞猜id" data-chinese="竞猜id" maxlength="16" pattern="[1-9]\d*" class="input width100" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" /> 
+						<input name="anchorId" type="text" placeholder="主播id" data-chinese="主播id" maxlength="8" pattern="[1-9]\d*" class="input width100" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')"/>
+	                     <select name="status" class="input" title="竞猜状态">
+	                        <option selected="selected" disabled="disabled">竞猜状态</option>
+	                        <option value="0">未开盘</option>
+	                        <option value="1">已开盘</option>
+	                        <option value="2">已封盘</option>
+	                        <option value="3">已结算</option>
+	                        <option value="4">流局</option>
+	                        <option value="5">PK审核未通过</option>
+	                      </select>
+	                      <select name="robStatus" class="input" title="抢庄状态">
+	                        <option selected="selected" disabled="disabled">抢庄状态</option>
+	                        <option value="0">未开启</option>
+	                        <option value="1">抢庄中</option>
+	                        <option value="2">抢庄结束</option>
+	                      </select>
+	                      <select name="finalResult" class="input" title="竞猜答案">
+	                        <option selected="selected" disabled="disabled">竞猜答案</option>
+	                        <option value="0">流局</option>
+	                        <option value="1">A</option>
+	                        <option value="2">B</option>
+	                        <option value="3">C</option>
+	                        <option value="4">D</option>
+	                      </select>
+						<button type="submit" class="btn">查询</button>
+						<button type="reset" class="btn btn-info">重置</button>
+						<button type="button" class="btn exportBtn">导出</button>
+					</form>
+
+					<div class="table">
+						<script type="text/template" id="temp">
+              {{each this value}}
+              <tr>
+                <td>{{value.guessId||''}}</td>
+                <td>{{value.anchorId||''}}</td>
+                <td>{{value.subId||''}}</td>
+                <td>{{value.isCustomStr||''}}</td>
+                <td>{{value.guessTitle||''}}</td>
+                <td>{{value.disTime||''}}</td>
+                <td>{{value.stopBetTimeStr||''}}</td>
+                <td>{{value.isRobStr||''}}</td>
+                <td>{{value.robStatusStr}}</td>
+                <td>{{value.stopRobTime||''}}</td>
+                <td>{{value.robProfit}}</td>
+                <td>{{value.finalRobUserId||''}}</td>
+                <td>{{value.poolBean||''}}</td>
+                <td>{{value.statusNameStr||''}}</td>
+                <td>{{value.finalResultStr||''}}</td>
+                 <td>
+                   <button data-guess-id="{{value.guessId}}" type="button" class="btn btn-outline btn-sm J_viewBtn">查看</button>
+                 </td>
+              </tr>
+              {{/each}}
+              {{if this.length === 0}}
+              <tr><td colspan="18">没有数据...</td></tr>
+              {{/if}}
+            </script>
+						<table>
+							<thead>
+								<tr>
+									<th>竞猜ID</th>
+									<th>主播ID</th>
+									<th>主题ID</th>
+									<th>是否自定义</th>
+									<th>竞猜标题</th>
+									<th>封盘间隔(秒)</th>
+									<th>封盘时间</th>
+									<th>是否抢庄</th>
+									<th>抢庄状态</th>
+									<th>抢庄结束时间</th>
+									<th>庄家收益(豆)</th>
+									<th>抢庄者</th>
+									<th>注池金额</th>
+									<th>竞猜状态</th>
+									<th>竞猜结果</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody id="content"></tbody>
+						</table>
+					</div>
+
+					<!-- 分页 -->
+					<ul class="pagination" id="pagination"></ul>
+					<!-- /分页 -->
+
+         <!-- 详情 -->
+          <div class="modal fade " id="J_detail">
+            <div class="modal-backdrop"></div>
+            <div class="modal-content">
+              <div class="modal-body">
+                <div class="table-form table-center">
+                  <table>
+                    <tbody>
+                    <tr>
+                      <th>竞猜ID：</th>
+                      <td data-insert="guessId"></td>
+                    </tr>
+                    <tr>
+                      <th>主播ID：</th>
+                      <td data-insert="anchorId"></td>
+                    </tr>
+                    <tr>
+                      <th>主题ID：</th>
+                      <td data-insert="subId"></td>
+                    </tr>
+                    <tr>
+                      <th>是否自定义：</th>
+                      <td data-insert="isCustomStr"></td>
+                    </tr>
+                   <tr>
+                      <th>竞猜标题：</th>
+                      <td data-insert="guessTitle"></td>
+                    </tr>
+                    <tr>
+                      <th>竞猜内容：</th>
+                      <td data-insert="guessContent"></td>
+                    </tr>
+                    <tr>
+                      <th>注池金额：</th>
+                      <td data-insert="poolBean"></td>
+                    </tr>
+                    <tr>
+                      <th>答案选项A：</th>
+                      <td data-insert="optionOne"></td>
+                    </tr>
+                    <tr>
+                      <th>答案选项B：</th>
+                      <td data-insert="optionTwo"></td>
+                    </tr>
+                    <tr>
+                      <th>封盘间隔时间(秒)：</th>
+                      <td data-insert="disTime"></td>
+                    </tr>
+                    <tr>
+                      <th>封盘时间点：</th>
+                      <td data-insert="stopBetTimeStr"></td>
+                    </tr>
+                    <tr>
+                      <th>是否抢庄：</th>
+                      <td data-insert="isRobStr"></td>
+                    </tr>
+                    <tr>
+                      <th>抢庄状态：</th>
+                      <td data-insert="robStatusStr"></td>
+                    </tr>
+                    <tr>
+                      <th>抢庄结束时间：</th>
+                      <td data-insert="stopRobTimeStr"></td>
+                    </tr>
+                    <tr>
+                      <th>庄家收益：</th>
+                      <td data-insert="robProfit"></td>
+                    </tr>
+                    <tr>
+                      <th>最终抢庄者ID：</th>
+                      <td data-insert="finalRobUserId"></td>
+                    </tr>
+                     <tr>
+                      <th>竞猜状态：</th>
+                      <td data-insert="statusNameStr"></td>
+                    </tr>
+                    <tr>
+                      <th>竞猜结果：</th>
+                      <td data-insert="finalResultStr"></td>
+                    </tr>
+                    <tr>
+                      <th>创建时间：</th>
+                      <td data-insert="gmtCreateStr"></td>
+                    </tr>
+                    <tr>
+                      <th>更新时间：</th>
+                      <td data-insert="gmtModifiedStr"></td>
+                    </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="modal-footer text-center">
+<!--                  <button data-id="" data-event="Storm.modal.hide" class="btn btn-outline btn-sm J_auditing">审核</button> -->
+                 <button data-target="#J_detail" data-event="Storm.modal.hide" type="button" class="btn btn-warning">返回</button>
+              </div>
+            </div>
+          </div>
+          <!-- /详情 -->
+          
+				</div>
+				<!-- /page body -->
+
+			</div>
+			<!-- /page main -->
+
+		</div>
+		<!-- /page -->
+
+	</div>
+	<!-- /main -->
+
+</div>
+<!-- /wrapper -->
+</body>
+</html>
+
+<script data-main="js/guess" src="js/base/require.min.js"></script>

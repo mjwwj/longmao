@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="common/head :: #head"></head>
+
+<body>
+	<!-- wrapper -->
+	<div class="wrapper">
+		<!-- main -->
+		<div class="main">
+			<!-- page -->
+			<div class="page">
+				
+				<!-- page main -->
+				<div class="pageMain">
+				
+					<!-- position -->
+					<div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>公众号商品</span>
+					</div>
+					<!-- /position -->
+					
+					<!-- page body -->
+					<div class="pageB">
+						<form data-param="goodsInfo" data-content="#content"
+							data-template="#temp" data-pagination="#pagination"
+							data-action="findGoodsInfo" data-form="search" class="form"
+							novalidate="novalidate">
+							
+							<input name="goodsId" type="text" pattern="[1-9]+"
+								data-chinese="商品ID" placeholder="商品ID" class="input width100"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" /> 
+							
+							<input name="goodsCategoryId" type="text" pattern="[1-9]+" 
+								data-chinese="类别ID" placeholder="类别ID" class="input width100" 
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" /> 
+								
+							<input name="name" type="text" data-chinese="名称" placeholder="名称"
+							 	class="input width100" />
+								
+							<select name="auditStatus" class="input width100" title="审核状态">
+		                        <option selected="selected" disabled="disabled">审核状态</option>
+		                        <option value="1">待审核</option>
+		                        <option value="2">审核中</option>
+		                        <option value="3">审核成功</option>
+		                        <option value="4">审核失败</option>
+	                      	</select>
+	                      	
+	                      	<select name="isEnable" class="input width100" title="是否展示">
+		                        <option selected="selected" disabled="disabled">是否展示</option>
+		                        <option value="1">是</option>
+		                        <option value="2">否</option>
+	                      	</select>
+	                      	
+	                      	<select name="isSellOut" class="input width100" title="是否售完">
+		                        <option selected="selected" disabled="disabled">是否售完</option>
+		                        <option value="1">是</option>
+		                        <option value="2">否</option>
+	                      	</select>
+	                      	
+							<button type="submit" class="btn">查询</button>
+							<button type="reset" class="btn btn-info">重置</button>
+						</form>
+						<div class="table">
+							<script type="text/template" id="temp">
+              					{{each this p}}
+              						<tr>
+                						<td>{{p.goodsId||''}}</td>
+                						<td>{{p.goodsCategoryId||''}}</td>
+                						<td>{{p.name||''}}</td>
+                						<td>{{p.currentStorage||''}}</td>
+               							<td>{{p.price||''}}</td>
+										<td>{{p.priceNum||''}}</td>
+                						<td>{{p.discount||''}}</td>
+                						<td>{{p.sellerUid||''}}</td>
+                						<td>{{p.auditStatusStr||''}}</td>
+               							<td>{{p.isEnableStr||''}}</td>
+										<td>{{p.isSellOutStr||''}}</td>
+                						<td>{{p.remark||''}}</td>
+                						<td>{{p.ctimeStr||''}}</td>
+                						<td>{{p.utimeStr||''}}</td>
+
+                						<td>
+                  							<button data-id="{{p.goodsId}}" type="button" class="btn btn-outline btn-sm wp_handle">修改</button> &nbsp;
+										</td>
+              						</tr>
+              					{{/each}}
+              					{{if this.length === 0}}
+              						<tr><td colspan="10">没有数据...</td></tr>
+              					{{/if}}
+            				</script>
+							
+							<table>
+								<thead>
+									<tr>
+										<th>商品ID</th>
+										<th>类别ID</th>
+										<th>名称</th>
+										<th>库存</th>
+										<th>单价</th>
+										<th>数量</th>
+										<th>折扣</th>
+										<th>卖家ID</th>
+										<th>审核状态</th>
+										<th>是否展示</th>
+										<th>是否售完</th>
+										<th>备注</th>
+										<th>创建时间</th>
+										<th>修改时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+						</div>
+						<!-- 分页 -->
+						<ul class="pagination" id="pagination"></ul>
+						<!-- /分页 -->
+					</div>
+					<!-- /page body -->
+				</div>
+				<!-- /page main -->
+			</div>
+			<!-- /page -->
+		</div>
+		<!-- /main -->
+	</div>
+	<!-- /wrapper -->
+
+	<!-- 修改商品 -->
+	<div class="modal fade " id="wp_goodshandle">
+		<div class="modal-backdrop"></div>
+		<div class="modal-content">
+			<div class="modal-body">
+				<form data-param="goodsInfo" id="wp_goodsHandleform" data-form="submit"
+					data-action="updateGoodsInfo" novalidate="novalidate">
+					<div class="table-form">
+						<table>
+							<tr>
+								<th>商品ID：</th>
+								<td>
+									<input name="goodsId" type="text" data-insert="goodsId" 
+										required="required" readonly="readonly" class="input" />
+								</td>
+							</tr>
+							<tr>
+								<th>类别ID：</th>
+								<td>
+									<input name="goodsCategoryId" type="text" data-insert="goodsCategoryId" 
+										required="required" readonly="readonly" class="input" />
+								</td>
+							</tr>
+							<tr>
+								<th>名称：</th>
+								<td>
+									<input name="name" type="text" data-insert="name" required="required"
+										placeholder="类别名称" data-chinese="类别名称" class="input" />
+								</td>
+							</tr>
+                       		<tr>
+								<th>库存：</th>
+								<td>
+									<input name="currentStorage" type="text" data-insert="currentStorage" required="required"
+										pattern="[0-9]"
+										placeholder="库存" data-chinese="库存" class="input" />
+								</td>
+							</tr>
+							<tr>
+								<th>单价：</th>
+								<td>
+									<input name="price" type="text" data-insert="price" required="required"
+										pattern="([0-9][0-9]*)|([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})"
+										placeholder="单价" data-chinese="单价" class="input" />
+								</td>
+							</tr>
+							<tr>
+								<th>数量：</th>
+								<td>
+									<input name="priceNum" type="text" data-insert="priceNum" required="required"
+										pattern="[0-9]"
+										placeholder="数量" data-chinese="数量" class="input" />
+								</td>
+							</tr>
+							<tr>
+								<th>折扣：</th>
+								<td>
+									<input name="discount" type="text" data-insert="discount" required="required"
+										placeholder="折扣" data-chinese="折扣" class="input" />
+								</td>
+							</tr>
+							<tr>
+								<th>卖家ID：</th>
+								<td>
+									<input name="sellerUid" type="text" data-insert="sellerUid" 
+										required="required" readonly="readonly" class="input" />
+								</td>
+							</tr>
+							<tr>
+								<th>审核状态：</th>
+								<td>
+									<select name="auditStatus" data-select="auditStatus" class="input" title="是否展示"></select>
+								</td>
+							</tr>
+							<tr>
+								<th>是否展示：</th>
+								<td>
+									<select name="isEnable" data-select="selectType" class="input" title="是否展示"></select>
+								</td>
+							</tr>
+							<tr>
+								<th>是否售完：</th>
+								<td>
+									<select name="isSellOut" data-select="selectType" class="input" title="是否售完"></select>
+								</td>
+							</tr>
+							<tr>
+								<th>备注：</th>
+								<td>
+									<input name="remark" type="text" data-insert="remark" required="required"
+										placeholder="折扣" data-chinese="折扣" class="input" />
+								</td>
+							</tr>
+                       		
+							<tr>
+								<td colspan="2">
+									<button class="btn" type="submit">修改</button> &nbsp;
+									<button data-target="#wp_goodshandle"
+										data-event="Storm.modal.hide" class="btn btn-warning" type="button">关闭</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+</body>
+</html>
+<script data-main="js/goodsInfo" src="js/base/require.min.js"></script>

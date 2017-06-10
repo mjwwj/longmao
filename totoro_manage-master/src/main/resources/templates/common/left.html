@@ -1,0 +1,101 @@
+  <!-- sidebar -->
+<div id="sidebar">
+  <div class="sidebar">
+  	<!-- logo -->
+	    <div class="logo">
+	      <a href="/index" title="龙猫直播后台管理系统"><img src="img/logo.png" alt="龙猫直播后台管理系统"/></a>
+	    </div>
+	    <!-- /logo -->
+    <!-- nav -->
+    
+ <!-- /. NAV TOP 左边菜单 -->
+            <nav class="navbar-default navbar-side" role="navigation">
+                <div class="sidebar-collapse">
+                    
+                    <div id="firstpane" class="menu_list">
+                    	
+							<div class="menu_head current" title="首页">
+								<a href="/index" style="color:#ffffff">
+									<img src="img/index.png">
+									<span>首页</span>
+								</a>
+							</div>
+						
+<!-- 						<div style="display:block" class="menu_body"></div> -->
+						
+							<div class="menu_head" title="druid监控">
+								<a href="/druid" target="_blank" style="color:#ffffff">
+									<img src="img/guangli.png">
+									<span>Druid监控</span>
+								</a>
+							</div>
+							
+							<div class="menu_head" title="RabbitMQ">
+								<a href="http://116.62.18.221:15672/" target="_blank" style="color:#ffffff">
+									<img src="img/guangli.png">
+									<span>RabbitMQ</span>
+								</a>
+							</div>
+							
+<!-- 						<div style="display:block" class="menu_body"></div> -->
+                    </div>
+                    
+                   <script>window.menuUrl = '$position'; </script>
+                   <script type="text/template" id="leftMenu"> 
+               			{{each this value}} 
+ 						  {{if value.hasMenu}} 
+                            <div class="menu_head"><img src="img/jiankong.png"><span>{{value.menuName}}</span></div>
+                            <div style="display:none" class="menu_body">
+                                {{if value.subMenu.length >= 1}} 
+ 									{{each value.subMenu subValue}} 
+ 										{{if subValue.hasMenu}} 
+                                            <a class="" href="{{subValue.menuUrl}}" target="mainFrame" title="{{subValue.menuName}}">{{subValue.menuName}}</a> 
+ 										{{/if}} 
+ 									{{/each}} 
+ 								{{/if}}
+                            </div>							
+ 						  {{/if}} 
+ 						{{/each}} 
+ 						{{if this.length === 0}} 
+ 						   <li>菜单查询异常...</li> 
+ 						{{/if}} 
+ 					</script> 
+                
+                </div>
+            </nav>
+    
+    
+    
+    
+<!--     <div class="nav"> -->
+<!--       <ul class="nav-slider"> -->
+<!--       </ul> -->
+<!--       <script>window.menuUrl = '$position'; </script> -->
+<!--        <script type="text/template" id="leftMenu"> -->
+<!--               {{each this value}} -->
+<!--                   {{if value.hasMenu}} -->
+<!--                       <li><a href="javascript:;" >{{value.menuName}}</a> -->
+<!-- 							{{if value.subMenu.length >= 1}} -->
+<!-- 								<ul class="nav-slide-child"> -->
+<!--                            			{{each value.subMenu subValue}} -->
+<!--                                   		{{if subValue.hasMenu}} -->
+<!--                                            <li {{if menuUrl  === subValue.menuUrl}} class="active"{{/if}}><a href="{{subValue.menuUrl}}" target="mainFrame" title="{{subValue.menuName}}">{{subValue.menuName}}</a></li> -->
+<!--                                    		{{/if}} -->
+<!--                           			 {{/each}} -->
+<!-- 								</ul> -->
+<!-- 							{{/if}} -->
+<!-- 						</li> -->
+<!--                   {{/if}} -->
+<!--               {{/each}} -->
+<!--               {{if this.length === 0}} -->
+<!--                    <li>菜单查询异常...</li> -->
+<!--               {{/if}} -->
+<!--             </script> -->
+<!--     </div> -->
+    
+    
+    <!-- /nav -->
+
+  </div>
+</div>
+  <!-- /sidebar -->

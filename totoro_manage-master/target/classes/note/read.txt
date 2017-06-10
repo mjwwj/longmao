@@ -1,0 +1,11 @@
+说明：本项目骨架采用springboot+jpa(主从)+mybatis(主从)+mapper插件+mysql主从库+swagger2
+
+mybatis访问示例
+http://localhost:8080/addUser?username=AAA&password=BBB(主库，注解插入)
+http://localhost:8080/addUserWithBackId?username=AAA&password=BBB(主库，xml插入)
+http://localhost:8080/getAllUsers(从库查询，需做主从库同步)
+
+jpa访问示例
+http://localhost:8080/findAllUsers(从库查询，jpa对象操作，需做主从库同步)
+http://localhost:8080/insertUser?username=aaa&password=bbb(主库插入，jpa对象操作)
+http://localhost:8080/updateUser?username=aaa&password=bbb&id=1487830676510580L(从库根据id查询对象，然后修改对象的值之后插入主库，jpa对象操作，需做主从库同步)

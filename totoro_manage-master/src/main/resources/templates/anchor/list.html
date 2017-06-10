@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head th:include="common/head :: #head"></head>
+  
+<body>
+	<!-- wrapper -->
+	<div class="wrapper">
+	
+		<!-- main -->
+		<div class="main">
+	   
+			<!-- page -->
+			<div class="page">
+				<!-- page main -->
+				<div class="pageMain">
+				
+					<div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>账户列表</span>
+					</div>
+					
+					<!-- page body -->
+					<div class="pageB">
+						<form data-param="anchorVO" data-content="#content"
+							data-template="#temp" data-pagination="#pagination"
+							data-action="findAnchor" data-form="search" class="form"
+							novalidate="novalidate">
+							<input name="userId" type="text" placeholder="用户ID"
+								data-chinese="用户ID" pattern="[1-9][0-9]+" class="input"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" /> 
+								
+							<input name="userName" type="text" placeholder="手机号码" maxlength="11"
+								data-chinese="手机号码" pattern="[1-9][0-9]+" class="input"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" />
+								
+							<select name="userType" class="input" title="状态">
+								<option selected="selected" disabled="disabled">用户类型</option>
+								<option value="0">普通用户</option>
+								<option value="1">主播</option>
+								<option value="2">企业</option>
+							</select>
+							<button type="submit" class="btn">查询</button>
+							<button type="reset" class="btn btn-info">重置</button>
+						</form>
+						<div class="table">
+							<table>
+								<thead>
+									<tr>
+										<th>用户ID</th>
+										<th>用户类型</th>
+										<th>手机号码</th>
+										<th>用户昵称</th>
+										<th>用户性别</th>
+										<th>卡路里</th>
+										<th>城市</th>
+										<th>注册时间</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+			<script type="text/template" id="temp">
+              {{each this val}}
+              <tr>
+                <td>{{val.userId||''}}</td>
+				<td>{{if 0 === val.userType}}普通用户{{else if 1 === val.userType}}主播{{else}}企业{{/if}}</td>
+				<td>{{val.userName||''}}</td>
+				<td>{{val.nickName||''}}</td>
+				<td>{{if 1 === val.sex}}男{{else}}女{{/if}}</td>
+				<td>{{val.calorie||'0'}}</td>
+				<td>{{val.city||'保密'}}</td>
+				<td>{{val.gmtCreate||''}}</td>
+                <td>
+				  {{if 0 === val.userType}}
+				  <button data-id="{{val.userId}}" type="button" class="btn btn-primary btn-sm J_viewBtn">开通主播</button>
+				  {{else if 1 === val.userType}}
+                  <button data-id="{{val.userId}}" type="button" class="btn btn-info btn-sm J_AnchorLogBtn">查看信息</button>
+				  {{else}}&nbsp;&nbsp;
+				  {{/if}}
+                </td>
+              </tr>
+              {{/each}}
+              {{if this.length === 0}}
+              <tr><td colspan="9">没有数据...</td></tr>
+              {{/if}}
+			</script>
+							
+						</div>
+						<!-- 分页 -->
+						<ul class="pagination" id="pagination"></ul>
+						<!-- /分页 -->
+						<!-- 开通主播 开始 -->
+						<div class="modal fade " id="J_showEdit">
+							<div class="modal-backdrop"></div>
+							<div class="modal-content">
+							<form id="J_AddAnchor" data-param="anchor" data-action="editAnchor" data-form="submit" novalidate="novalidate">
+								<div class="modal-body">
+									<div class="table-form table-center">
+										<table>
+											<tbody>
+												<tr>
+													<th>主播类型：</th>
+													<td>
+														<select name="anchorType" class="input" title="主播类型">
+															<option value="0">全民主播</option>
+															<option value="1">家族主播</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<th>真实姓名：</th>
+													<td><input name="realName" type="text" placeholder="真实姓名"
+								data-chinese="真实姓名" class="input" /></td>
+												</tr>
+												<tr>
+													<th>身份证号：</th>
+													<td><input name="idCard" type="text" placeholder="身份证号"
+								data-chinese="身份证号" class="input" /></td>
+												</tr>
+												<tr>
+													<th>支付宝：</th>
+													<td><input name="alipayId" type="text" placeholder="支付宝"
+								data-chinese="支付宝" class="input" /></td>
+												</tr>
+												<tr>
+													<th>手机号码：</th>
+													<td><input name="mobile" type="text" placeholder="手机号码"
+								data-chinese="手机号码" class="input" /></td>
+												</tr>
+												<tr>
+													<th>兑换比率：</th>
+													<td><input name="ratio" required="required" type="text" placeholder="兑换比率"
+								data-chinese="兑换比率" class="input" value="0.50"/></td>
+												</tr>
+												<tr>
+													<th>备注：</th>
+													<td><input name="remark" type="text" placeholder="备注"
+								data-chinese="备注" class="input" /></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="modal-footer text-center">
+									<input name="userId" id="edit_userId" type="hidden" required="required" class="input" />
+									<button type="submit" class="btn" style="margin-right:30px">开通</button>
+									<button data-target="#J_showEdit" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+								</div>
+								</form>
+							</div>
+						</div>
+						<!-- 开通主播 结束 -->
+						<!-- 主播详情 开始 -->
+						<div class="modal fade " id="J_detail">
+							<div class="modal-backdrop"></div>
+							<div class="modal-content">
+								<div class="modal-header text-center">
+									<button data-id="" data-event="Storm.modal.hide" class="btn btn-danger btn-sm J_banLive">禁播</button>
+									<button data-id="" data-event="Storm.modal.hide" class="btn btn-danger btn-sm J_openLive">开播</button>
+								</div>
+								<div class="modal-header text-center">
+									<button data-id="" data-event="Storm.modal.hide" class="btn btn-danger btn-sm J_cancel">取消主播</button>
+								</div>
+							<form id="J_EditAnchor" data-param="anchor" data-action="editAnchor" data-form="submit" novalidate="novalidate">
+								<div class="modal-body">
+									<div class="table-form table-center">
+										<table>
+											<tbody>
+												<tr>
+													<th>主播类型：</th>
+													<td>
+														<select name="anchorType" class="input J_anchorType" title="主播类型">
+															<option value="0">全民主播</option>
+															<option value="1">家族主播</option>
+														</select>
+													</td>
+												</tr>
+												<tr>
+													<th>真实姓名：</th>
+													<td><input name="realName" type="text" placeholder="真实姓名"
+								data-chinese="真实姓名" class="input" data-insert="realName" /></td>
+												</tr>
+												<tr>
+													<th>身份证号：</th>
+													<td><input name="idCard" type="text" placeholder="身份证号"
+								data-chinese="身份证号" class="input" data-insert="idCard" /></td>
+												</tr>
+												<tr>
+													<th>支付宝：</th>
+													<td><input name="alipayId" type="text" placeholder="支付宝"
+								data-chinese="支付宝" class="input" data-insert="alipayId" /></td>
+												</tr>
+												<tr>
+													<th>手机号码：</th>
+													<td><input name="mobile" type="text" placeholder="手机号码"
+								data-chinese="手机号码" class="input" data-insert="mobile" /></td>
+												</tr>
+												<tr>
+													<th>兑换比率：</th>
+													<td><input name="ratio" id="add_ratio" required="required" type="text" placeholder="兑换比率"
+								data-chinese="兑换比率" class="input" data-insert="ratio"/></td>
+												</tr>
+												<tr>
+													<th>备注：</th>
+													<td><input name="remark" type="text" placeholder="备注"
+								data-chinese="备注" class="input" data-insert="remark" /></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="modal-footer text-center">
+									<input name="userId" id="add_userId" data-insert="userId" required="required" type="hidden" class="input" />
+									<button type="submit" class="btn" style="margin-right:30px">修改</button>
+									<button data-target="#J_detail" data-event="Storm.modal.hide" class="btn btn-warning" type="button">取消</button>
+								</div>
+								</form>
+							</div>
+						</div>
+						<!-- 主播详情 结束 -->
+					</div>
+					<!-- /page body -->
+				</div>
+				<!-- /page main -->
+			</div>
+			<!-- /page -->
+		</div>
+		<!-- /main -->
+	</div>
+<!-- 	/wrapper -->
+	
+	</body>
+	<script data-main="js/anchor" src="js/base/require.min.js"></script>
+</html>

@@ -1,0 +1,1 @@
+alter table `guess_info` drop column is_close;

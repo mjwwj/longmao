@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:include="common/head :: #head"></head>
+
+<body>
+	<!-- wrapper -->
+	<div class="wrapper">
+		<!-- main -->
+		<div class="main">
+			<!-- page -->
+			<div class="page">
+				
+				<!-- page main -->
+				<div class="pageMain">
+				
+					<!-- position -->
+					<div class="position">
+						<a href="/index" target="_parent" title="首页">首页</a> &gt; <span>公众号订单</span>
+					</div>
+					<!-- /position -->
+					
+					<!-- page body -->
+					<div class="pageB">
+						<form data-param="orderInfo" data-content="#content"
+							data-template="#temp" data-pagination="#pagination"
+							data-action="findOrderInfo" data-form="search" class="form"
+							novalidate="novalidate">
+							
+							<input name="orderId" type="text" pattern="[1-9]+"
+								data-chinese="订单ID" placeholder="订单ID" class="input width100"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" /> 
+								
+							<input name="buyerUid" type="text" pattern="[1-9]+"
+								data-chinese="买家ID" placeholder="买家ID" class="input width100"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" /> 
+								
+							<input name="sellerUid" type="text" pattern="[1-9]+"
+								data-chinese="卖家ID" placeholder="卖家ID" class="input width100"
+								onkeyup="this.value=this.value.replace(/^ +| +$/g,'')" /> 
+							
+							<select name="payWay" class="input width100" title="支付方式">
+		                        <option selected="selected" disabled="disabled">支付方式</option>
+		                        <option value="1">支付宝</option>
+		                        <option value="2">微信</option>
+		                        <option value="3">银联</option>
+		                        <option value="4">IOS支付</option>
+		                        <option value="5">龙猫豆</option>
+		                        <option value="6">平台扣费</option>
+		                        <option value="7">卡路里</option>
+	                      	</select>
+							
+							<select name="orderStatus" class="input" title="订单状态">
+		                        <option selected="selected" disabled="disabled">订单状态</option>
+		                        <option value="1">待付款</option>
+		                        <option value="2">已付款，处理中</option>
+		                        <option value="3">处理中，待发货</option>
+		                        <option value="4">交易成功</option>
+		                        <option value="5">交易失败</option>
+		                        <option value="6">退款</option>
+	                      	</select>
+								
+							<select name="deliveryStatus" class="input width100" title="发货状态">
+		                        <option selected="selected" disabled="disabled">发货状态</option>
+		                        <option value="1">待发货</option>
+		                        <option value="2">发货中</option>
+		                        <option value="3">已发货</option>
+		                        <option value="4">发货失败</option>
+		                        <option value="5">处理失败</option>
+	                      	</select>
+	                      	
+							<button type="submit" class="btn">查询</button>
+							<button type="reset" class="btn btn-info">重置</button>
+						</form>
+						<div class="table">
+							<script type="text/template" id="temp">
+              					{{each this p}}
+              						<tr>
+                						<td>{{p.orderId||''}}</td>
+                						<td>{{p.buyerUid||''}}</td>
+                						<td>{{p.sellerUid||''}}</td>
+                						<td>{{p.orderPrice||''}}</td>
+               							<td>{{p.payPrice||''}}</td>
+										<td>{{p.integral||''}}</td>
+										<td>{{p.payWayStr||''}}</td>
+										<td>{{p.discountWayStr||''}}</td>
+										<td>{{p.orderStatusStr||''}}</td>
+										<td>{{p.deliveryStatusStr||''}}</td>
+										<td>{{p.createDate||''}}</td>
+										<td>
+                  							<button data-id="{{p.orderId}}" type="button" class="btn btn-outline btn-sm wp_detail">详情</button> &nbsp;
+										</td>
+              						</tr>
+              					{{/each}}
+              					{{if this.length === 0}}
+              						<tr><td colspan="10">没有数据...</td></tr>
+              					{{/if}}
+            				</script>
+							
+							<table>
+								<thead>
+									<tr>
+										<th>订单ID</th>
+										<th>买家ID</th>
+										<th>卖家ID</th>
+										<th>总金额</th>
+										<th>实付金额</th>
+										<th>积分</th>
+										<th>支付方式</th>
+										<th>优惠方式</th>
+										<th>订单状态</th>
+										<th>发货状态</th>
+										<th>创建日期</th>
+										<th>操作</th>
+									</tr>
+								</thead>
+								<tbody id="content"></tbody>
+							</table>
+						</div>
+						<!-- 分页 -->
+						<ul class="pagination" id="pagination"></ul>
+						<!-- /分页 -->
+					</div>
+					<!-- /page body -->
+				</div>
+				<!-- /page main -->
+			</div>
+			<!-- /page -->
+		</div>
+		<!-- /main -->
+	</div>
+	<!-- /wrapper -->
+
+	<!-- 详情弹框 -->
+	<div class="modal fade " id="wp_orderDetail">
+		<div class="modal-backdrop"></div>
+		<div class="modal-content">
+			<div class="modal-body">
+				<form data-param="goodsTypeInfo" id="wp_orderForm" data-form="submit"
+					data-action="saveGoodsTypeInfo" novalidate="novalidate">
+					<div class="table-form">
+						<table>
+							<tr>
+								<th>订单ID：</th>
+								<td data-insert="orderId"></td>
+							</tr>
+							<tr>
+								<th>买家ID：</th>
+								<td data-insert="buyerUid"></td>
+							</tr>
+							<tr>
+								<th>卖家ID：</th>
+								<td data-insert="sellerUid"></td>
+							</tr>
+							<tr>
+								<th>总金额：</th>
+								<td data-insert="orderPrice"></td>
+							</tr>
+							<tr>
+								<th>实付金额：</th>
+								<td data-insert="payPrice"></td>
+							</tr>
+							<tr>
+								<th>积分：</th>
+								<td data-insert="integral"></td>
+							</tr>
+							<tr>
+								<th>支付方式：</th>
+								<td data-insert="payWayStr"></td>
+							</tr>
+							<tr>
+								<th>优惠方式：</th>
+								<td data-insert="discountWayStr"></td>
+							</tr>
+							<tr>
+								<th>订单状态：</th>
+								<td data-insert="orderStatusStr"></td>
+							</tr>
+							<tr>
+								<th>发货状态：</th>
+								<td data-insert="deliveryStatusStr"></td>
+							</tr>
+							<tr>
+								<th>创建日期：</th>
+								<td data-insert="createDate"></td>
+							</tr>
+                       		<tr>
+								<th>渠道ID：</th>
+								<td data-insert="chlId"></td>
+							</tr>
+							<tr>
+								<th>渠道订单ID：</th>
+								<td data-insert="chlOrderId"></td>
+							</tr>
+                       		
+                       		<tr>
+								<th>支付时间：</th>
+								<td data-insert="timeC"></td>
+							</tr>
+							<tr>
+								<th>备注：</th>
+								<td data-insert="remark"></td>
+							</tr>
+							<tr>
+								<th>有效时间：</th>
+								<td data-insert="orderEndTime"></td>
+							</tr>
+							<tr>
+								<th>创建时间：</th>
+								<td data-insert="timeC"></td>
+							</tr>
+<!-- 							<tr> -->
+<!-- 								<th>修改时间：</th> -->
+<!-- 								<td data-insert="timeU"></td> -->
+<!-- 							</tr> -->
+							<tr>
+								<th>退款状态：</th>
+								<td data-insert="refundStatusStr"></td>
+							</tr>
+                       		<tr>
+								<th>兑吧参数：</th>
+								<td data-insert="param"></td>
+							</tr>
+							
+							<tr>
+								<td colspan="2">
+									<button data-target="#wp_orderDetail"
+										data-event="Storm.modal.hide" class="btn btn-warning" type="button">关闭</button>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+</body>
+</html>
+<script data-main="js/publicSignalOrder" src="js/base/require.min.js"></script>
