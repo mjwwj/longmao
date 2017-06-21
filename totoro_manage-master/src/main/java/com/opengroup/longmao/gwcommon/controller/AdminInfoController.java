@@ -42,6 +42,8 @@ import com.opengroup.longmao.gwcommon.tools.role.Tools;
  */
 @Controller
 public class AdminInfoController {
+	
+	private String name;
 
 	@Autowired
 	private AdminInfoService adminInfoService;

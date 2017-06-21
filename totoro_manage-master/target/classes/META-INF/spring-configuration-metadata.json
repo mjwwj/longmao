@@ -2,11 +2,6 @@
   "hints": [],
   "groups": [
     {
-      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
-      "name": "",
-      "type": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig"
-    },
-    {
       "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.EnvironmentConfig",
       "name": "",
       "type": "com.opengroup.longmao.gwcommon.configuration.properties.EnvironmentConfig"
@@ -20,6 +15,11 @@
       "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.QiNiuConfig",
       "name": "",
       "type": "com.opengroup.longmao.gwcommon.configuration.properties.QiNiuConfig"
+    },
+    {
+      "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig",
+      "name": "",
+      "type": "com.opengroup.longmao.gwcommon.configuration.properties.RedisConfig"
     },
     {
       "sourceType": "com.opengroup.longmao.gwcommon.configuration.properties.MessagePushConfig",

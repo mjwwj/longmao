@@ -9758,3 +9758,5 @@ Caused by: java.net.ConnectException: Connection timed out: connect
 	at com.mysql.jdbc.StandardSocketFactory.connect(StandardSocketFactory.java:211) ~[mysql-connector-java-5.1.41.jar:5.1.41]
 	at com.mysql.jdbc.MysqlIO.<init>(MysqlIO.java:300) ~[mysql-connector-java-5.1.41.jar:5.1.41]
 	... 22 more
+[2017-06-21 09:48:11] INFO : Starting TotoroManageApplication on mjdeMacBook-Pro.local with PID 767 (/Users/mj/longmao/longmao/totoro_manage-master/target/classes started by mj in /Users/mj/longmao/longmao/totoro_manage-master)
+[2017-06-21 09:48:11] INFO : The following profiles are active: dev
